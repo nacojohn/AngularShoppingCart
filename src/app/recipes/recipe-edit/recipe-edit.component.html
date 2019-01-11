@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmitForm()">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!myForm.valid">Save</button>
+          <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" formControlName="name">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Image URL</label>
+            <input type="text" name="imagePath" class="form-control" formControlName="imagePath" #imagePath>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="editMode">
+        <div class="col-xs-12">
+          <img [src]="imagePath.value" class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="desc">Description</label>
+            <textarea name="desc" rows="6" class="form-control" formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- myForm.get('ingredients').controls -->
+        <div class="col-xs-12" formArrayName="ingredients">
+          <div class="form-group row"
+            *ngFor="let ingredientCtrl of formData.controls; let i = index"
+            [formGroupName]="i">
+            <div class="col-xs-8">
+              <!-- <label for="">Ingredient</label> -->
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="col-xs-2">
+              <!-- <label for="">Amount</label> -->
+              <input type="number" class="form-control" formControlName="amount">
+            </div>
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-danger" (click)="removeIngredient(i)">X</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="button" class="btn btn-success" (click)="addNewIngredient()">Add Ingredient</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
